@@ -240,7 +240,7 @@ if (empty($students)) {
         $profilelink = '<strong><a href="'.$profileurl.'">'.fullname($student).'</a></strong>';
         $data = array($OUTPUT->user_picture($student, array('courseid' => $course->id)), $profilelink);
 
-        $data[] = $student->submission_count . " of " . $student->member_count - 1;
+        $data[] = $student->submission_count . " of " . strval($student->member_count - 1);
 
         if ($student->peerassessstarted) {
             $data[] = get_string('started', 'peerassess');
