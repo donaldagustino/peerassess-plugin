@@ -178,7 +178,7 @@ function pa_get_scores_from_userid($peerassessid, $userid, $DB) {
 function pa_calculate_all ($peerassessid, $cmid) {
     
     $totalscores = [];
-    $averagescores = [];
+    $averagescores = [1];
     global $DB;
 
     $tablefg = 'peerassess_finalgrades';
