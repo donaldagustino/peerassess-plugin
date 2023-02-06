@@ -93,7 +93,7 @@ function pa_get_all_questions_max_score($peerassessid, $DB) {
 	$presentations = $DB->get_records_sql("SELECT i.id, i.presentation
 			FROM {peerassess_item} AS i
 			WHERE i.peerassess = ?
-			AND i.typ = 'multichoice'", [
+			AND i.typ = 'multichoicerated'", [
 				$peerassessid
 			]);
 
