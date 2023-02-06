@@ -186,6 +186,7 @@ class peerassess_item_memberselect extends peerassess_item_base {
         $conditions = ["id" => $value->value];
         $userdata = $DB->get_record('user', $conditions);
 
+        echo $userdata;
         $printval = $userdata->firstname . ' ' . $userdata->lastname;
 
         // if (!isset($value->value)) {

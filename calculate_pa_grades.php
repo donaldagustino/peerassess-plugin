@@ -175,7 +175,7 @@ function pa_get_scores_from_userid($peerassessid, $userid, $DB) {
     return $pascores;
 }
 
-function pa_calculate_all ($userids, $pascores, $peerassessid, $cmid) {
+function pa_calculate_all ($peerassessid, $cmid) {
     
     $totalscores = [];
     $averagescores = [];
@@ -240,9 +240,9 @@ function pa_calculate_all ($userids, $pascores, $peerassessid, $cmid) {
     $effectiverange = (($smax - $smin) / ($maxscore - $questioncount) )* $rmax;
     // echo "test 2";
     
-    // print_object($totalscores);
-    // print_object($averagescores);
-    // print_object($effectiverange);
+    //print_object($totalscores);
+    //print_object($averagescores);
+    //print_object($effectiverange);
     
     
     foreach ($userids as $memberid) {
@@ -330,7 +330,7 @@ function pa_calculate_all ($userids, $pascores, $peerassessid, $cmid) {
 
 
 if (has_capability('mod/peerassess:edititems', $context)) {
-    pa_calculate_all($userids, $pascores, $peerassessid, $cmid);
+    pa_calculate_all($peerassessid, $cmid);
 }
 
 redirect('breakdown_per_group.php?id='.$cmid, 'Success Calculating Final Grades with PA', null, \core\output\notification::NOTIFY_SUCCESS);
