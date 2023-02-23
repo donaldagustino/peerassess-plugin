@@ -186,9 +186,8 @@ class peerassess_item_memberselect extends peerassess_item_base {
         $conditions = ["id" => $value->value];
         $userdata = $DB->get_record('user', $conditions);
 
-        echo $userdata;
         $printval = $userdata->firstname . ' ' . $userdata->lastname;
-
+        //echo $userdata;
         // if (!isset($value->value)) {
         //     return $printval;
         // }
@@ -218,6 +217,7 @@ class peerassess_item_memberselect extends peerassess_item_base {
         //     }
         // }
         return $printval;
+
     }
 
     public function print_analysed($item, $itemnr = '', $groupid = false, $courseid = false) {

@@ -196,7 +196,7 @@ class mod_peerassess_responses_table extends table_sql {
         if (preg_match('/^val(\d+)$/', $column, $matches)) {
             $items = $this->peerassessstructure->get_items();
             $itemobj = peerassess_get_item_class($items[$matches[1]]->typ);
-            $printval = $itemobj->get_printval($items[$matches[1]], (object) ['value' => $row->$column]);
+            $printval = $itemobj->get_printval($items[$matches[1]], (object)['value' => $row->$column]);
             if ($this->is_downloading()) {
                 $printval = s($printval);
             }
