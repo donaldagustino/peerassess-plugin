@@ -286,6 +286,11 @@ function pa_calculate_all ($peerassessid, $cmid) {
         // this is indexed by assignment id
         $assigngrades = pa_get_assignment_grades($assignmentids, $memberid, $DB);
         
+        // retrieving peerassess information (record) of a user / student
+        $record = $DB->get_record($tablepa, ["userid" => $memberid, "peerassessid" => $peerassessid]);
+        
+        $peerfactor = $record->peerfactor;
+
         
         $finalgradewithpas = array_map(function($assigngrade) use ($peerfactor) {
             $finalgradewithpf = $assigngrade * $peerfactor;
