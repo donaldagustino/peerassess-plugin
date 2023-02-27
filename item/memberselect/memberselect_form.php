@@ -75,7 +75,7 @@ class peerassess_memberselect_form extends peerassess_item_form {
             return false;
         }
 
-        $presentation = str_replace("\n", PEERASSESS_MEMBERSELECT_LINE_SEP, trim($item->values));
+        $presentation = str_replace("\n", PEERASSESS_MEMBERSELECT_LINE_SEP, " ");
         if (!isset($item->subtype)) {
             $subtype = 'd';
         } else {
