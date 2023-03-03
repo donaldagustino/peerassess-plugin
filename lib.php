@@ -2981,6 +2981,10 @@ function peerassess_extend_settings_navigation(settings_navigation $settings,
                     new moodle_url('/mod/peerassess/show_entries.php',
                                     array('id' => $PAGE->cm->id)));
 
+        $peerassessnode->add(get_string('show_graphical_analysis', 'peerassess'),
+                    new moodle_url('/mod/peerassess/show_graphical_analysis.php',
+                                    array('id' => $PAGE->cm->id)));                           
+
         if ($peerassess->anonymous == PEERASSESS_ANONYMOUS_NO AND $peerassess->course != SITEID) {
             $peerassessnode->add(get_string('show_nonrespondents', 'peerassess'),
                         new moodle_url('/mod/peerassess/show_nonrespondents.php',

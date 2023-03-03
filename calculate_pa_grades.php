@@ -203,7 +203,7 @@ function pa_calculate_all ($peerassessid, $cmid) {
     }
 
     // $maxscore = pa_get_all_questions_max_score($peerassessid, $DB);
-    $questioncount = pa_get_question_count($peerassessid, $DB);
+    // $questioncount = pa_get_question_count($peerassessid, $DB);
 
     // function pa_get_rmax () {
     //     $mform = $this->_form;
@@ -218,16 +218,15 @@ function pa_calculate_all ($peerassessid, $cmid) {
         }
         $totalscore = $totalscores[$memberid];
         $numreceived = pa_get_num_received($peerassessid, $memberid, $DB);
-        $averagescores[$memberid] = ($totalscore / ($numreceived * $questioncount));
+        $averagescores[$memberid] = ($totalscore / $numreceived);
     }
 
     $smax = max($averagescores);
     $smin = min($averagescores);
     
-    //$maxscore = pa_get_all_questions_max_score($peerassessid, $DB) / $questioncount; 
-    //$questioncount = pa_get_question_count($peerassessid, $DB);
-    $maxscore = 5;
-    $minscore = 1;
+    $maxscore = pa_get_all_questions_max_score($peerassessid, $DB);
+    $questioncount = pa_get_question_count($peerassessid, $DB);
+
 
     // $rmax = pa_input_pf_maxrange($pf_maxrange);
     function pa_input_pf_maxrange($pf_maxrange) {
@@ -238,7 +237,7 @@ function pa_calculate_all ($peerassessid, $cmid) {
     $rmax = pa_input_pf_maxrange(0.2);
     
     //effectiverange = (Smax - Smin) / questions * (interval input by lecturer)
-    $effectiverange = (($smax - $smin) / ($maxscore - $minscore)) * $rmax;
+    $effectiverange = (($smax - $smin) / ($maxscore - $questioncount) )* $rmax;
     // echo "test 2";
     
     //print_object($totalscores);
@@ -342,4 +341,3 @@ if (has_capability('mod/peerassess:edititems', $context)) {
 redirect('breakdown_per_group.php?id='.$cmid, 'Success Calculating Final Grades with PA', null, \core\output\notification::NOTIFY_SUCCESS);
 exit;
 // echo $OUTPUT->footer();
-

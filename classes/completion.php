@@ -723,7 +723,7 @@ class mod_peerassess_completion extends mod_peerassess_structure {
                 ($this->form->is_validated() || $gopreviouspage)) {
             // Form was submitted (skip validation for "Previous page" button).
             $data = $this->form->get_submitted_data();
-            if (!isset($SESSION->peerassess->is_started) OR !$SESSION->peerassess->is_started == true) {
+            if (!isset($SESSION->peerassess->is_started) && !$SESSION->peerassess->is_started == true) {
                 print_error('error', '', $CFG->wwwroot.'/course/view.php?id='.$this->courseid);
             }
             $this->save_response_tmp($data);
