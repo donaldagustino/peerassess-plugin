@@ -253,7 +253,6 @@ function pa_calculate_all ($peerassessid, $cmid) {
         $avgstudscore = $averagescores[$memberid];
         // echo "test 3";
         $peerfactor = (($avgstudscore - $smin) / ($smax - $smin)) * 2 * $effectiverange + (1 - $effectiverange);
-        $peerfactor = $peerfactor <= 2.0 ? $peerfactor : 2.0;
         // echo "test 4";
         
         $peerfactors[$memberid] = $peerfactor;
