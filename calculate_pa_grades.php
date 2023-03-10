@@ -68,7 +68,7 @@ function pa_get_assignment_ids($peerassessid, $DB) {
 
 // Input assingment id and member id
 // Return: Assignment Grades {[1] => 96, [2] => 60, [3] => 40]}
-function pa_get_assignment_grades($assignment_ids, $userid, $DB) {
+function pa_get_assignment_grades($assignment_ids, $userid, $DB, $cmid) {
 	$assignment_grades = [];
 	foreach ($assignment_ids as $assignment_id) {
 		$assignment_grade = $DB->get_record_sql("SELECT
@@ -83,8 +83,15 @@ function pa_get_assignment_grades($assignment_ids, $userid, $DB) {
 					$assignment_id,
 					$userid
 				]);
-		$assignment_grades[$assignment_id] = $assignment_grade->grade;
+
+        if($assignment_grade == NULL){
+            redirect('view.php?id='.$cmid, 'Failure Calculating Peer Factor, Check if all assignments of the students have been graded.', null, \core\output\notification::NOTIFY_ERROR);
+        }else{
+            $assignment_grades[$assignment_id] = $assignment_grade->grade;
+        }
+		
 	}
+
 
 	return $assignment_grades;
 }
@@ -237,7 +244,13 @@ function pa_calculate_all ($peerassessid, $cmid) {
     $rmax = pa_input_pf_maxrange(0.2);
     
     //effectiverange = (Smax - Smin) / questions * (interval input by lecturer)
-    $effectiverange = (($smax - $smin) / ($maxscore - $questioncount) )* $rmax;
+    $internal_input = $maxscore - $questioncount;
+    if($internal_input == NULL){
+        redirect('view.php?id='.$cmid, 'Failure Calculating Peer Factor, No students has done thier peer assessment.', null, \core\output\notification::NOTIFY_ERROR);
+    }else{
+        $effectiverange = (($smax - $smin) / $internal_input )* $rmax;
+    }
+    
     // echo "test 2";
     
     //print_object($totalscores);
@@ -284,7 +297,7 @@ function pa_calculate_all ($peerassessid, $cmid) {
         $assignmentids = pa_get_assignment_ids($peerassessid, $DB);
 
         // this is indexed by assignment id
-        $assigngrades = pa_get_assignment_grades($assignmentids, $memberid, $DB);
+        $assigngrades = pa_get_assignment_grades($assignmentids, $memberid, $DB, $cmid);
         
         // retrieving peerassess information (record) of a user / student
         $record = $DB->get_record($tablepa, ["userid" => $memberid, "peerassessid" => $peerassessid]);
