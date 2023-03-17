@@ -76,15 +76,15 @@ if (has_capability('mod/peerassess:viewreports', $context)) {
                             $breakdownurl->out(),
                             get_string('breakdown_per_group', 'peerassess'));
 
-    $reporturl = new moodle_url('/mod/peerassess/show_entries.php', $urlparams);
-    $row[] = new tabobject('showentries',
-                            $reporturl->out(),
-                            get_string('show_entries', 'peerassess'));
-
     $analysisurl = new moodle_url('/mod/peerassess/show_graphical_analysis.php', $urlparams);
     $row[] = new tabobject('showgraphicalanalysis', 
                             $analysisurl->out(),
-                            get_string('show_graphical_analysis', 'peerassess'));                        
+                            get_string('show_graphical_analysis', 'peerassess'));
+
+    $reporturl = new moodle_url('/mod/peerassess/show_entries.php', $urlparams);
+    $row[] = new tabobject('showentries',
+                            $reporturl->out(),
+                            get_string('show_entries', 'peerassess'));                        
 
     if ($peerassess->anonymous == PEERASSESS_ANONYMOUS_NO AND $peerassess->course != SITEID) {
         $nonrespondenturl = new moodle_url('/mod/peerassess/show_nonrespondents.php', $urlparams);

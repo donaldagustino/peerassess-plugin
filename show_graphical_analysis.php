@@ -17,7 +17,7 @@
 /**
  * shows an analysed view of peerassess
  *
- * @copyright Andreas Grabs
+ * @copyright Donald Otto Agustino
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package mod_peerassess
  */
@@ -99,6 +99,12 @@ if(NULL == ($matchcount = $DB->count_records('groups_members', array('groupid'=>
 echo $OUTPUT->heading(get_string('members_in_current_group', 'peerassess', $matchcount), 4);
 echo isset($groupselect) ? $groupselect : '';
 
+// echo $OUTPUT->container_start('form-buttons');
+// $aurl = new moodle_url('/mod/peerassess/show_graphical_analysis.php', ['sesskey' => sesskey(), 'id' => $id]);
+// echo $OUTPUT->single_button($aurl, get_string('export_to_excel', 'peerassess'));
+// echo $OUTPUT->container_end();
+// echo '<div class="clearer"></div>';
+
 $students = peerassess_get_all_users_records($cm, $usedgroupid, '', false, false, true);
 
 $student_names = array();
@@ -118,15 +124,15 @@ if (empty($students)) {
         
         $normalized_peerfactor = $is_started ? $peerfactor / 2 : 0;
 
-        echo '<div style="width: 100%; margin: 16px 0; display: flex; flex-direction: column;">' .
-                '<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">' . fullname($student) . '</p>' .
-                '<div style="width: 100%; display: flex; flex-direction: column;">'.
-                    '<div style="width: 100%; border: 1px solid black;">'.
-                    '<div style="width: calc(100% * '.$normalized_peerfactor.'); height: 16px; background-color: #5b5b5b;"><div style="color: white; font-size: 11px;">'. $peerfactor .'</div></div>' .
-                '</div>'.
-                '<div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between"><div>0.0</div><div>2.0</div></div>' .
-            '</div>'.
-        '</div>';
+        // echo '<div style="width: 100%; margin: 16px 0; display: flex; flex-direction: column;">' .
+        //         '<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">' . fullname($student) . '</p>' .
+        //         '<div style="width: 100%; display: flex; flex-direction: column;">'.
+        //             '<div style="width: 100%; border: 1px solid black;">'.
+        //             '<div style="width: calc(100% * '.$normalized_peerfactor.'); height: 16px; background-color: #5b5b5b;"><div style="color: white; font-size: 11px;">'. $peerfactor .'</div></div>' .
+        //         '</div>'.
+        //         '<div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between"><div>0.0</div><div>2.0</div></div>' .
+        //     '</div>'.
+        // '</div>';
     }
 }
 
