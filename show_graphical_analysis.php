@@ -29,7 +29,7 @@ $current_tab = 'graphicanalysis';
 
 $id = required_param('id', PARAM_INT);  // Course module id.
 
-$url = new moodle_url('/mod/peerassess/show_graphical_analysis.php', array('id'=>$id));
+$url = new moodle_url('/mod/peerassess/show_graphicalanalysis.php', array('id'=>$id));
 $PAGE->set_url($url);
 
 list($course, $cm) = get_course_and_cm_from_cmid($id, 'peerassess');
@@ -99,11 +99,11 @@ if(NULL == ($matchcount = $DB->count_records('groups_members', array('groupid'=>
 echo $OUTPUT->heading(get_string('members_in_current_group', 'peerassess', $matchcount), 4);
 echo isset($groupselect) ? $groupselect : '';
 
-// echo $OUTPUT->container_start('form-buttons');
-// $aurl = new moodle_url('/mod/peerassess/show_graphical_analysis.php', ['sesskey' => sesskey(), 'id' => $id]);
-// echo $OUTPUT->single_button($aurl, get_string('export_to_excel', 'peerassess'));
-// echo $OUTPUT->container_end();
-// echo '<div class="clearer"></div>';
+//print export to excel button
+echo $OUTPUT->container_start('form-buttons');
+$aurl = new moodle_url('/mod/peerassess/show_graphical_to_excel.php', ['sesskey' => sesskey(), 'id' => $id]);
+echo $OUTPUT->single_button($aurl, get_string('export_to_excel', 'peerassess'));
+echo $OUTPUT->container_end();
 
 $students = peerassess_get_all_users_records($cm, $usedgroupid, '', false, false, true);
 
@@ -121,18 +121,7 @@ if (empty($students)) {
         array_push($student_scores, $peerfactor);
 
         $is_started = $DB->record_exists('peerassess_completed', array('peerassess'=>$peerassess->id, 'userid'=>$student->id));
-        
-        $normalized_peerfactor = $is_started ? $peerfactor / 2 : 0;
 
-        // echo '<div style="width: 100%; margin: 16px 0; display: flex; flex-direction: column;">' .
-        //         '<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">' . fullname($student) . '</p>' .
-        //         '<div style="width: 100%; display: flex; flex-direction: column;">'.
-        //             '<div style="width: 100%; border: 1px solid black;">'.
-        //             '<div style="width: calc(100% * '.$normalized_peerfactor.'); height: 16px; background-color: #5b5b5b;"><div style="color: white; font-size: 11px;">'. $peerfactor .'</div></div>' .
-        //         '</div>'.
-        //         '<div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between"><div>0.0</div><div>2.0</div></div>' .
-        //     '</div>'.
-        // '</div>';
     }
 }
 
