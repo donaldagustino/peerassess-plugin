@@ -29,7 +29,7 @@ $current_tab = 'graphicanalysis';
 
 $id = required_param('id', PARAM_INT);  // Course module id.
 
-$url = new moodle_url('/mod/peerassess/show_graphicalanalysis.php', array('id'=>$id));
+$url = new moodle_url('/mod/peerassess/show_graphical_analysis.php', array('id'=>$id));
 $PAGE->set_url($url);
 
 list($course, $cm) = get_course_and_cm_from_cmid($id, 'peerassess');

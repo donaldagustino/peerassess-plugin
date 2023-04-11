@@ -152,7 +152,7 @@ if (empty($students)) {
       foreach($groups_average as $group_name => $group_avg_peerfactor) {
         $rowoffset1++;
         $worksheet1->write_string($rowoffset1, 0, $group_name, $xlsxformats->head1);
-        $worksheet1->write_string($rowoffset1, 1, $group_avg_peerfactor, $xlsxformats->head1);
+        $worksheet1->write_string($rowoffset1, 1, $group_peerfactor, $xlsxformats->head1);
       }
     } else {
       foreach($students_peerfactor as $student_name => $student_peerfactor) {
