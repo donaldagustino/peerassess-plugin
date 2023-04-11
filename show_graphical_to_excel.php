@@ -77,7 +77,7 @@ if ($groupmode > 0) {
 
 $groupName = $DB->get_field('groups', 'name', array('id'=>$mygroupid, 'courseid'=>$course->id), $strictness=IGNORE_MISSING);
 // Creating a workbook.
-$filename = "Breakdown_" .clean_filename($groupName). ".xlsx";
+$filename = "Peer_Factor_" .clean_filename($groupName). ".xlsx";
 $workbook = new MoodleExcelWorkbook($filename);
 
 // Creating the worksheet.
