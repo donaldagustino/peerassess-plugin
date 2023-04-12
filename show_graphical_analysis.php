@@ -161,6 +161,81 @@ if ($mygroupid != 0) {
     echo $OUTPUT->render($chart);
 }
 
+$assignment_grades = $DB->get_fieldset_sql(
+    'SELECT psa.assignmentid FROM {peerassess_assignments} psa WHERE psa.peerassessid = ' . $peerassess->id,
+    array('peerassessid' => $peerassess->id)
+);
+ 
+if ($mygroupid != 0) {
+    $grade_count = 0;
+    foreach ($assignment_grades as $assignment_grade) {
+        $student_assignment_grade = array();
+ 
+        foreach ($students as $student) {
+            $assignment_results = $DB->get_fieldset_sql(
+                'SELECT pfg.finalgradewithpa FROM  {peerassess_finalgrades} pfg WHERE pfg.peerassessid = ' . $peerassess->id . ' AND pfg.userid = ' . $student->id,
+                array('peerassessid' => $peerassess->id)
+            );
+ 
+            if (empty($assignment_results)) {
+                $student_assignment_grade[fullname($student)] = 0;
+            } else {
+                $student_assignment_grade[fullname($student)] = $assignment_results[$grade_count];
+            }
+            
+        }
+ 
+        $chart = new \core\chart_bar();
+        $chart->set_labels(array_keys($student_assignment_grade));
+        $chart->add_series(new \core\chart_series('Assignment ' . $assignment_grade . ' Grade', array_values($student_assignment_grade)));
+        $yaxis = $chart->get_yaxis(0, true);
+        $yaxis->set_max(100.0);
+ 
+        echo $OUTPUT->render($chart);
+ 
+        $grade_count++;
+    }
+} else {
+    
+    $grade_count = 0;
+    foreach ($assignment_grades as $assignment_grade) {
+        $groups_assignment_average = array();
+        $groups = groups_get_activity_allowed_groups($cm);
+        foreach ($groups as $group) {
+            $groups_assignment_average[$group->name] = 0;
+ 
+            $total = 0;
+            $count = 0;
+ 
+            $students = peerassess_get_all_users_records($cm, $group->id, '', false, false, true);
+            foreach ($students as $student) {
+                $assignment_results = $DB->get_fieldset_sql(
+                    'SELECT pfg.finalgradewithpa FROM  {peerassess_finalgrades} pfg WHERE pfg.peerassessid = ' . $peerassess->id . ' AND pfg.userid = ' . $student->id,
+                    array('peerassessid' => $peerassess->id)
+                );
+ 
+                if (empty($assignment_results)) {
+                    $total += 0;
+                } else {
+                    $total += $assignment_results[$grade_count];
+                }
+                $count++;
+            }
+ 
+            $groups_assignment_average[$group->name] = round($total / $count, 3);
+        }
+ 
+        $chart = new \core\chart_bar();
+        $chart->set_labels(array_keys($groups_assignment_average));
+        $chart->add_series(new \core\chart_series('Assignment ' . $assignment_grade . ' Grade', array_values($groups_assignment_average)));
+        $yaxis = $chart->get_yaxis(0, true);
+        $yaxis->set_max(100.0);
+ 
+        echo $OUTPUT->render($chart);
+ 
+        $grade_count++;
+    }
+}
 
 echo $OUTPUT->footer();
 
