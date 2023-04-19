@@ -227,7 +227,7 @@ if ($mygroupid != 0) {
  
         $chart = new \core\chart_bar();
         $chart->set_labels(array_keys($groups_assignment_average));
-        $chart->add_series(new \core\chart_series('Assignment ' . $assignment_grade . ' Grade', array_values($groups_assignment_average)));
+        $chart->add_series(new \core\chart_series('Average Assignment ' . $assignment_grade . ' Grade', array_values($groups_assignment_average)));
         $yaxis = $chart->get_yaxis(0, true);
         $yaxis->set_max(100.0);
  
